@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    @apply bg-white font-sans text-body antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: #B4FF24; color: #020202; }
+  :focus-visible { outline: 2px solid #8427FD; outline-offset: 2px; border-radius: 6px; }
+  h1, h2, h3, h4 { @apply text-ink; }
+}
+
+@layer components {
+  /* Display type — expanded grotesque standing in for Grifter */
+  .font-display { font-stretch: 125%; letter-spacing: -0.02em; }
+  .display-xl { @apply text-ink font-display font-extrabold leading-[0.95]; font-size: clamp(2.5rem, 5.8vw, 5.25rem); font-stretch: 125%; letter-spacing: -0.035em; }
+  .display-lg { @apply text-ink font-display font-extrabold leading-[1]; font-size: clamp(2rem, 4.1vw, 3.6rem); font-stretch: 125%; letter-spacing: -0.03em; }
+  .display-md { @apply text-ink font-display font-bold leading-[1.05]; font-size: clamp(1.6rem, 2.8vw, 2.4rem); font-stretch: 120%; letter-spacing: -0.025em; }
+  .display-sm { @apply text-ink font-display font-bold leading-[1.15]; font-size: clamp(1.2rem, 1.8vw, 1.5rem); font-stretch: 115%; letter-spacing: -0.015em; }
+  .eyebrow { @apply font-display text-[11px] font-semibold uppercase tracking-[0.18em]; font-stretch: 112%; }
+  .lead { @apply text-lg leading-relaxed text-body md:text-xl; }
+  .stat-num { @apply font-display font-extrabold tabular-nums leading-none; font-stretch: 125%; letter-spacing: -0.04em; }
+
+  .text-spectrum { @apply bg-brand-spectrum bg-clip-text text-transparent; background-size: 200% 100%; }
+
+  /* Buttons */
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[15px] font-semibold transition duration-200 will-change-transform active:scale-[0.98]; }
+  .btn-primary { @apply btn bg-ink text-white hover:-translate-y-0.5 hover:bg-violet; }
+  .btn-lime { @apply btn bg-lime text-ink hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-10px_rgba(180,255,36,0.8)]; }
+  .btn-violet { @apply btn bg-violet text-white hover:-translate-y-0.5 hover:bg-violet-700; }
+  .btn-ghost { @apply btn border border-line bg-white text-ink hover:border-ink; }
+  .btn-ghost-dark { @apply btn border border-white/20 text-white hover:border-white hover:bg-white/5; }
+  .btn-sm { @apply px-4 py-2 text-sm; }
+
+  .chip { @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-line bg-white px-2.5 py-1 text-xs font-medium text-title; }
+  .chip-dark { @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-xs font-medium text-white/80; }
+
+  .card { @apply rounded-2xl border border-line bg-white transition duration-300; }
+  .card-hover { @apply hover:-translate-y-1 hover:border-violet-200 hover:shadow-lift; }
+
+  .placeholder { @apply rounded border border-dashed border-magenta/60 bg-magenta-100/40 px-1.5 font-mono text-[0.8em] text-violet-700; }
+
+  .section { @apply py-20 md:py-28; }
+  .hairline { @apply border-t border-line; }
+}
+
+@layer utilities {
+  .bg-grid-light {
+    background-image: linear-gradient(to right, rgba(132,39,253,0.07) 1px, transparent 1px), linear-gradient(to bottom, rgba(132,39,253,0.07) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .bg-grid-dark {
+    background-image: linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .mask-fade-b { mask-image: linear-gradient(to bottom, black 55%, transparent); }
+  .mask-fade-x { mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent); }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
+
+/* Scroll reveal — elements start hidden only when JS + motion are available */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
+.reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* Placeholders sitting on dark surfaces */
+[class*='bg-ink-900'] .placeholder, [class*='bg-violet '] .placeholder { @apply border-lime/60 bg-lime/10 text-lime-200; }
